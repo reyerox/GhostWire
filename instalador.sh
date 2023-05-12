@@ -1,5 +1,5 @@
 #!/usr/bin
-
+# Instalador de herramienta.sh
 # Colors
 red='\e[1;31m'
 default='\e[0m'
@@ -298,6 +298,7 @@ echo -e $green
 dos2unix *.sh > /dev/null 2>&1
 echo -e "$green[✔][Concediendo permisos............[ OK ]"
 chmod +x *.sh > /dev/null 2>&1
+chmod +x utilities/*.sh > /dev/null 2>&1
 mkdir colorlib
 sleep 1.5
 pushd colorlib > /dev/null 2>&1
