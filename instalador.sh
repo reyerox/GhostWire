@@ -272,6 +272,23 @@ fi
 
 fi
 
+# Configuring folders
+#echo -e $yellow
+#echo -n [*] Configurando carpetas...= ;
+#sleep 3 & while [ "$(ps a | awk '{print $1}' | grep $!)" ] ; do for X in '-' '\' '|' '/'; do echo -en "\b$X"; sleep 0.1; done; done
+#echo ""
+#echo -e $green
+#
+#if [ -d tools/Android ]; then
+#echo -e "[✔]Ya existe $path/tools/Android"
+#sleep 0.2
+#else
+#mkdir -p tools/Android
+#echo -e "[✔]$path/tools/Android"
+#sleep 0.2
+#fi
+
+
 # Configurando la carpeta
 echo -e $yellow
 echo -n [*] Configurando carpeta...= ;
@@ -292,22 +309,6 @@ echo -e "$red[x][Página clorlib.com no clonada]..........[ NOT FOUND ]"
 sleep 1.5
 echo -e "$yellow[!][Clonando página web...]"
 httrack https://colorlib.com/etc/lf/Login_v5/index.html -O colorlib/ > /dev/null 2>&1
-fi
-
-# Configuring folders
-echo -e $yellow
-echo -n [*] Configurando carpetas...= ;
-sleep 3 & while [ "$(ps a | awk '{print $1}' | grep $!)" ] ; do for X in '-' '\' '|' '/'; do echo -en "\b$X"; sleep 0.1; done; done
-echo ""
-echo -e $green
-
-if [ -d tools/Android ]; then
-echo -e "[✔]Ya existe $path/tools/Android"
-sleep 0.2
-else
-mkdir -p tools/Android
-echo -e "[✔]$path/tools/Android"
-sleep 0.2
 fi
 
 # Installing requirements
