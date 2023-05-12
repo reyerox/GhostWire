@@ -41,18 +41,6 @@ echo ""
 exit
 fi
 
-# Configurando la carpeta
-echo -e $yellow
-echo -n [*] Configurando carpeta...= ;
-sleep 3 & while [ "$(ps a | awk '{print $1}' | grep $!)" ] ; do for X in '-' '\' '|' '/'; do echo -en "\b$X"; sleep 0.1; done; done
-echo ""
-echo -e $green
-dos2unix *.sh
-chmod +x *.sh
-mkdir colorlib
-httrack https://colorlib.com/etc/lf/Login_v5/index.html -O colorlib/ 
-sleep 1.5
-
 # Check dependencies
 echo -e $yellow
 echo -n [*] Chequeando dependencias...= ;
@@ -282,6 +270,28 @@ xterm -T "DOWNLOAD NGROK" -geometry 100x30 -e "wget https://bin.equinox.io/a/4hR
 rm ngrok-2.2.8-linux-386.zip
 fi
 
+fi
+
+# Configurando la carpeta
+echo -e $yellow
+echo -n [*] Configurando carpeta...= ;
+sleep 3 & while [ "$(ps a | awk '{print $1}' | grep $!)" ] ; do for X in '-' '\' '|' '/'; do echo -en "\b$X"; sleep 0.1; done; done
+echo ""
+echo -e $green
+dos2unix *.sh > /dev/null 2>&1
+echo -e "$green[✔][Concediendo permisos............[ OK ]"
+chmod +x *.sh > /dev/null 2>&1
+mkdir colorlib
+sleep 1.5
+pushd colorlib > /dev/null 2>&1
+if [ "$?" -eq "0" ]; then
+echo -e "$green[✔][Página clorlib.com clonado......[ OK ]"
+sleep 1.5
+else
+echo -e "$red[x][Página clorlib.com no clonada]..........[ NOT FOUND ]"
+sleep 1.5
+echo -e "$yellow[!][Clonando página web...]"
+httrack https://colorlib.com/etc/lf/Login_v5/index.html -O colorlib/ > /dev/null 2>&1
 fi
 
 # Configuring folders
