@@ -296,6 +296,8 @@ sleep 3 & while [ "$(ps a | awk '{print $1}' | grep $!)" ] ; do for X in '-' '\'
 echo ""
 echo -e $green
 dos2unix *.sh > /dev/null 2>&1
+dos2unix utilities/*.sh > /dev/null 2>&1
+
 echo -e "$green[✔][Concediendo permisos............[ OK ]"
 chmod +x *.sh > /dev/null 2>&1
 chmod +x utilities/*.sh > /dev/null 2>&1
