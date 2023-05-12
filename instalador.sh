@@ -1,5 +1,5 @@
 #!/usr/bin
-# Instalador de herramienta.sh
+
 # Colors
 red='\e[1;31m'
 default='\e[0m'
@@ -308,7 +308,7 @@ else
 echo -e "$red[x][Página clorlib.com no clonada]..........[ NOT FOUND ]"
 sleep 1.5
 echo -e "$yellow[!][Clonando página web...]"
-httrack https://colorlib.com/etc/lf/Login_v5/index.html -O colorlib/ > /dev/null 2>&1
+httrack https://colorlib.com/etc/lf/Login_v5/index.html -O /home/kali/Desktop/GhostWire/colorlib > /dev/null 2>&1
 fi
 
 # Installing requirements
