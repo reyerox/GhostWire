@@ -1,5 +1,5 @@
 #!/usr/bin
-# Instalador de herramienta.sh
+
 # Colors
 red='\e[1;31m'
 default='\e[0m'
@@ -301,18 +301,20 @@ dos2unix utilities/*.sh > /dev/null 2>&1
 echo -e "$green[✔][Concediendo permisos............[ OK ]"
 chmod +x *.sh > /dev/null 2>&1
 chmod +x utilities/*.sh > /dev/null 2>&1
-mkdir colorlib
+mkdir colorlib > /dev/null 2>&1
 sleep 1.5
-pushd colorlib > /dev/null 2>&1
-if [ "$?" -eq "0" ]; then
-echo -e "$green[✔][Página clorlib.com clonado......[ OK ]"
-sleep 1.5
+
+dir="/home/kali/Desktop/GhostWire/colorlib"
+
+if [ "$(ls -A $dir)" ]; then
+    echo -e "$green[✔][Página colorlib.com clonado......[ OK ]"
 else
-echo -e "$red[x][Página clorlib.com no clonada]..........[ NOT FOUND ]"
-sleep 1.5
-echo -e "$yellow[!][Clonando página web...]"
-httrack https://colorlib.com/etc/lf/Login_v5/index.html -O /home/kali/Desktop/GhostWire/colorlib > /dev/null 2>&1
+    echo -e "$red[x][Página colorlib.com no clonada]..........[ NOT FOUND ]"
+    sleep 1.5
+    echo -e "$yellow[!][Clonando página web...]"
+    httrack https://colorlib.com/etc/lf/Login_v5/index.html -O /home/kali/Desktop/GhostWire/colorlib > /dev/null 2>&1
 fi
+
 
 # Installing requirements
 echo -e $yellow
