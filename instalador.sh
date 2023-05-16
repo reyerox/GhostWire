@@ -253,6 +253,18 @@ echo -e "$yellow[!][Installing gnome-terminal...]"
 xterm -T "INSTALLER GNOME-TERMINAL" -geometry 100x30 -e "sudo apt-get install gnome-terminal"
 fi
 
+# Check if jq exists
+which jq > /dev/null 2>&1
+if [ "$?" -eq "0" ]; then
+echo -e "$green[✔][jq].................[ OK ]"
+sleep 1.5
+else
+echo -e "$red[x][jq]...................[ NOT FOUND ]"
+sleep 1.5
+echo -e "$yellow[!][Installing jq...]"
+xterm -T "INSTALLER GNOME-TERMINAL" -geometry 100x30 -e "sudo apt-get install jq -y"
+fi
+
 # Check if ngrok exists
 arch=`arch`
 if [ -f "ngrok" ]; then
