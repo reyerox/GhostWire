@@ -464,3 +464,23 @@ fi
 echo -e "\n${yellowColour}Gracias por usar esta herramienta, Buena Suerte...${endColour}\n"
 echo -e "${redColour}By Daniel Reyero${endColour}"
 exit 0
+
+
+
+
+Posible script para volver a normal la antena :
+
+#!/bin/bash
+
+echo -e "\n\n${yellowColour}[*]${endColour}${grayColour} Exiting...\n${endColour}"
+rm dnsmasq.conf hostapd.conf 2>/dev/null
+rm -r iface 2>/dev/null
+find -name datos-privados.txt | xargs rm 2>/dev/null
+sleep 3; ifconfig wlan0 down 2>/dev/null; sleep 1
+iwconfig wlan0 mode managed 2>/dev/null; sleep 1
+ifconfig wlan0 up 2>/dev/null; sleep 1
+tput cnorm; service networking restart
+
+echo -e "\n${yellowColour}Gracias por usar esta herramienta. ¡Buena suerte!${endColour}\n"
+echo -e "${redColour}Por Daniel Reyero${endColour}"
+exit 0
