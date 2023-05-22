@@ -84,66 +84,66 @@ sleep 1.5
 echo -e "$yellow[!][Installing Metasploit-Framework...]"
 xterm -T "INSTALLER METASPLOIT FRAMEWORK" -geometry 100x30 -e "curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && chmod 755 msfinstall && ./msfinstall && sudo apt-get update && apt-get upgrade"
 fi
-
-# Check if apktool exists 
-which apktool > /dev/null 2>&1
-if [ "$?" -eq "0" ]; then
-echo -e "$green[✔][Apktool]........................[ OK ]"
-sleep 1.5
-else
-echo -e "$red[x][Apktool].....................[ NOT FOUND ]"
-sleep 1.5
-echo -e "$yellow[!][Installing Apktool...]"
-xterm -T "INSTALLER APKTOOL" -geometry 100x30 -e "wget -O apktool.jar https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.4.0.jar && wget https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool && mv apktool* /usr/local/bin && chmod +x /usr/local/bin/apktool*"
-fi
-
-# Check if aapt exists
-which aapt > /dev/null 2>&1
-if [ "$?" -eq "0" ]; then
-echo -e "$green[✔][Aapt]...........................[ OK ]"
-sleep 1.5
-else
-echo -e "$red[x][Aapt]........................[ NOT FOUND ]"
-sleep 1.5
-echo -e "$yellow[!][Installing Aapt...]"
-xterm -T "INSTALLER AAPT" -geometry 100x30 -e "sudo apt-get install -y aapt && sudo apt-get install -y android-framework-res"
-fi
-
-# Check if jarsigner exists
-which jarsigner > /dev/null 2>&1
-if [ "$?" -eq "0" ]; then
-echo -e "$green[✔][Jarsigner]......................[ OK ]"
-sleep 1.5
-else
-echo -e "$red[x][Jarsigner]...................[ NOT FOUND ]"
-sleep 1.5
-echo -e "$yellow[!][Installing Jarsigner...]"
-xterm -T "INSTALLER JARSIGNER" -geometry 100x30 -e "sudo apt-get install -y default-jdk"
-fi
-
-# Check if zipalign exists
-which zipalign > /dev/null 2>&1
-if [ "$?" -eq "0" ]; then
-echo -e "$green[✔][Zipalign].......................[ OK ]"
-sleep 1.5
-else
-echo -e "$red[x][Zipalign]....................[ NOT FOUND ]"
-sleep 1.5
-echo -e "$yellow[!][Installing Zipalign...]"
-xterm -T "INSTALLER ZIPALIGN" -geometry 100x30 -e "sudo apt-get install -y zipalign"
-fi
-
-# Check if pwgen exists
-which pwgen > /dev/null 2>&1
-if [ "$?" -eq "0" ]; then
-echo -e "$green[✔][Pwgen]..........................[ OK ]"
-sleep 1.5
-else
-echo -e "$red[x][Pwgen].......................[ NOT FOUND ]"
-sleep 1.5
-echo -e "$yellow[!][Installing Pwgen...]"
-xterm -T "INSTALLER PWGEN" -geometry 100x30 -e "sudo apt-get install pwgen"
-fi
+#
+## Check if apktool exists 
+#which apktool > /dev/null 2>&1
+#if [ "$?" -eq "0" ]; then
+#echo -e "$green[✔][Apktool]........................[ OK ]"
+#sleep 1.5
+#else
+#echo -e "$red[x][Apktool].....................[ NOT FOUND ]"
+#sleep 1.5
+#echo -e "$yellow[!][Installing Apktool...]"
+#xterm -T "INSTALLER APKTOOL" -geometry 100x30 -e "wget -O apktool.jar https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.4.0.jar && wget https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool && mv apktool* /usr/local/bin && chmod +x /usr/local/bin/apktool*"
+#fi
+#
+## Check if aapt exists
+#which aapt > /dev/null 2>&1
+#if [ "$?" -eq "0" ]; then
+#echo -e "$green[✔][Aapt]...........................[ OK ]"
+#sleep 1.5
+#else
+#echo -e "$red[x][Aapt]........................[ NOT FOUND ]"
+#sleep 1.5
+#echo -e "$yellow[!][Installing Aapt...]"
+#xterm -T "INSTALLER AAPT" -geometry 100x30 -e "sudo apt-get install -y aapt && sudo apt-get install -y android-framework-res"
+#fi
+#
+## Check if jarsigner exists
+#which jarsigner > /dev/null 2>&1
+#if [ "$?" -eq "0" ]; then
+#echo -e "$green[✔][Jarsigner]......................[ OK ]"
+#sleep 1.5
+#else
+#echo -e "$red[x][Jarsigner]...................[ NOT FOUND ]"
+#sleep 1.5
+#echo -e "$yellow[!][Installing Jarsigner...]"
+#xterm -T "INSTALLER JARSIGNER" -geometry 100x30 -e "sudo apt-get install -y default-jdk"
+#fi
+#
+## Check if zipalign exists
+#which zipalign > /dev/null 2>&1
+#if [ "$?" -eq "0" ]; then
+#echo -e "$green[✔][Zipalign].......................[ OK ]"
+#sleep 1.5
+#else
+#echo -e "$red[x][Zipalign]....................[ NOT FOUND ]"
+#sleep 1.5
+#echo -e "$yellow[!][Installing Zipalign...]"
+#xterm -T "INSTALLER ZIPALIGN" -geometry 100x30 -e "sudo apt-get install -y zipalign"
+#fi
+#
+## Check if pwgen exists
+#which pwgen > /dev/null 2>&1
+#if [ "$?" -eq "0" ]; then
+#echo -e "$green[✔][Pwgen]..........................[ OK ]"
+#sleep 1.5
+#else
+#echo -e "$red[x][Pwgen].......................[ NOT FOUND ]"
+#sleep 1.5
+#echo -e "$yellow[!][Installing Pwgen...]"
+#xterm -T "INSTALLER PWGEN" -geometry 100x30 -e "sudo apt-get install pwgen"
+#fi
 
 # Check if hostapd exists
 which hostapd > /dev/null 2>&1
