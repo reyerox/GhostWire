@@ -41,6 +41,8 @@ echo ""
 exit
 fi
 
+sudo apt update > /dev/null 2>&1
+
 # Check dependencies
 echo -e $yellow
 echo -n [*] Chequeando dependencias...= ;
