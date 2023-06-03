@@ -19,7 +19,9 @@ $query = "INSERT INTO credenciales (nombre, apellido, email, password) VALUES ('
 $resultado = mysqli_query($conexion, $query);
 
 if($resultado){
-    echo "Registro exitoso";
+    header("Location: tu_pagina.php");
+    exit();
+
 } else {
     echo "Error al registrar el usuario: " . mysqli_error($conexion);
 }
