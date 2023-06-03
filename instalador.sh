@@ -41,13 +41,17 @@ echo ""
 exit
 fi
 
-sudo apt update > /dev/null 2>&1
-
 # Check dependencies
 echo -e $yellow
 echo -n [*] Chequeando dependencias...= ;
 sleep 3 & while [ "$(ps a | awk '{print $1}' | grep $!)" ] ; do for X in '-' '\' '|' '/'; do echo -en "\b$X"; sleep 0.1; done; done
 echo ""
+
+echo -e "$yellow[!][Apt update...]"
+
+sudo apt update > /dev/null 2>&1
+
+
 
 # Check if xterm exists
 which xterm > /dev/null 2>&1
@@ -338,7 +342,7 @@ echo ""
 echo -e $green
 pip3 install requests
 pip3 install py-getch
-apt-get install python3-tk
+apt-get install python3-tk -y
 pip3 install pathlib
 pip3 install zenipy
 pip3 install pgrep

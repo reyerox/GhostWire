@@ -176,12 +176,12 @@ sleep  1
     sleep 5
 clear
 
-echo -e "${YELLOW}Elige entre dos modos de ataque${NC}"
+echo -e "${YELLOW}Elige entre cuatro modos de ataque:${NC}"
 echo
 echo -e "${redColour}POR FAVOR USE ESTA OPCIÓN RESPONSABLEMENTE.${endColour}\n"
-echo -e "${yellowColour}1)${endColour} ${purpleColour}Se ejecutarán ettercap y sslstrip junto a una página web de login por http${endColour}"
-echo -e "${yellowColour}2)${endColour} ${purpleColour}La página web está conectada a una base de datos programada en php${endColour}"
-echo -e "${yellowColour}3)${endColour} ${purpleColour}Google-login${endColour}"
+echo -e "${yellowColour}1)${endColour} ${purpleColour}Se ejecutarán ettercap y sslstrip junto a una página web de login.${endColour}"
+echo -e "${yellowColour}2)${endColour} ${purpleColour}La página web está conectada a una base de datos programada en php y creacion de apk maliciosa.${endColour}"
+echo -e "${yellowColour}3)${endColour} ${purpleColour}Página web de Google-login${endColour}"
 echo -e "${yellowColour}4)${endColour} ${purpleColour}Utilizar una plantilla propia${endColour}"
 while true; do
 echo -n " #? "
