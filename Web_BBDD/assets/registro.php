@@ -19,7 +19,7 @@ $query = "INSERT INTO credenciales (nombre, apellido, email, password) VALUES ('
 $resultado = mysqli_query($conexion, $query);
 
 if($resultado){
-    header("Location: tu_pagina.php");
+    header("Location: ./../index.html");
     exit();
 
 } else {
