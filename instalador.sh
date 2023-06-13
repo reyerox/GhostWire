@@ -47,7 +47,7 @@ echo -n [*] Chequeando dependencias...= ;
 sleep 3 & while [ "$(ps a | awk '{print $1}' | grep $!)" ] ; do for X in '-' '\' '|' '/'; do echo -en "\b$X"; sleep 0.1; done; done
 echo ""
 
-echo -e "$yellow[!][Apt update...]"
+echo -e "\n$yellow[!][Apt update...]"
 
 sudo apt update > /dev/null 2>&1
 
