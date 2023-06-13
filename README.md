@@ -1,6 +1,6 @@
 # GhostWire
 
-GhostWire es una aplicación que permite crear un rogue access point y con ello poder esnifar la red, montar un servidor apache, etc. El RogueAP es una red inalámbrica que se configura para parecerse a una red legítima con el objetivo de engañar a los usuarios y hacer que se conecten a ella.
+GhostWire es una aplicación que permite crear un rogue access point y con ello poder esnifar la red, montar un servidor apache, etc. El RogueAP es una red inalámbrica que se configura para parecerse a una red legítima con el objetivo de engañar a los usuarios y hacer que se conecten a dicha red pudiendo así obtener credenciales de las victimas que se conecten.
 
 ## Requerimientos
 
