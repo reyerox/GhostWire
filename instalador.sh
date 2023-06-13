@@ -10,7 +10,7 @@ green='\033[92m'
 path=$(pwd)
 # Check root 
 if [ "$(id -u)" != "0" ] > /dev/null 2>&1; then
-echo -e '\n$red[x] Este script necesita permisos root.' 1>&2
+echo -e "\n$red[x] Este script necesita permisos root." 1>&2
 exit
 fi
 
