@@ -12,11 +12,6 @@ GhostWire es una aplicación que permite crear un rogue access point y con ello 
 * Xterm: Es un emulador de terminal para sistemas Unix que proporciona una ventana de terminal para ejecutar comandos en la línea de comandos.
 * PostgreSQL: Es un sistema de gestión de bases de datos relacionales de código abierto y gratuito que se utiliza para almacenar y administrar grandes cantidades de datos.
 * Metasploit Framework: Es una plataforma de prueba de penetración de código abierto que se utiliza para probar la seguridad de los sistemas informáticos y desarrollar y ejecutar exploits.
-* Apktool: Es una herramienta de ingeniería inversa de aplicaciones de Android que se utiliza para decompilar, editar y volver a compilar aplicaciones de Android.
-* Aapt: Es una herramienta de línea de comandos para crear y administrar archivos APK de Android.
-* Jarsigner: Es una herramienta de línea de comandos para firmar y verificar archivos JAR en Java.
-* Zipalign: Es una herramienta de optimización de APK que se utiliza para optimizar el tamaño y el rendimiento de las aplicaciones de Android.
-* Pwgen: Es un generador de contraseñas aleatorias que se utiliza para crear contraseñas seguras y fuertes.
 * Hostapd: Es un demonio de punto de acceso inalámbrico que se utiliza para crear y administrar puntos de acceso inalámbricos.
 * Dnsmasq: Es un servidor de DNS y DHCP que se utiliza para proporcionar servicios de red a dispositivos conectados a una red.
 * Sslstrip: Es una herramienta que se utiliza para manipular el tráfico HTTP no seguro y forzar el uso de conexiones HTTPS seguras.
@@ -26,7 +21,7 @@ GhostWire es una aplicación que permite crear un rogue access point y con ello 
 * Httrack: Es una herramienta de descarga de sitios web que se utiliza para descargar sitios web completos para su uso sin conexión.
 * MySQL: Es un sistema de gestión de bases de datos relacionales de código abierto que se utiliza para almacenar y administrar grandes cantidades de datos.
 * Gnome-Terminal: Es un emulador de terminal para sistemas Unix que proporciona una ventana de terminal para ejecutar comandos en la línea de comandos.
-*Ngrok: Es una herramienta que se utiliza para crear un túnel seguro a través de una red pública para exponer un servidor web localmente en línea.
+* Ngrok: Es una herramienta que se utiliza para crear un túnel seguro a través de una red pública para exponer un servidor web localmente en línea.
 * Python: lenguaje de programación utilizado para el desarrollo de la aplicación.
 Pasos para inicializar la aplicación
 
