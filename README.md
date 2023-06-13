@@ -44,15 +44,13 @@ Una vez hechoo esto ya estaria listo para utilizar.
 ```python
 python3 DoS.py
 ```
-2.- Opcional: Crear apk maliciosa con msfvenom.
+2.- GhostWire.sh para crear red inalambrica.
+  2.1.- Página web, utilización de sslstrip y ettercap.
+  2.2.- La página web está conectada a una base de datos programada en php y creacion de apk maliciosa.
+  2.3.- Página web de Google-login
+
 ```bash
-./msfvenom.sh
-```
-3.- Herramienta.sh para crear red inalambrica.
-  3.1.- Página web, utilización de sslstrip y ettercap.
-  3.2.- Página web conectada a una base de datos.
-```bash
-./herramienta.sh
+./GhostWire.sh
 ```
 
 Para abrir imágenes desde la terminal en sistemas Unix/Linux, puedes utilizar el comando "xdg-open" seguido del nombre de archivo de la imagen. Por ejemplo, si tienes una imagen llamada "imagen.jpg" y se encuentra en tu directorio actual, puedes abrir la imagen con el siguiente comando:
