@@ -232,7 +232,7 @@ else
 echo -e "$red[x][httrack]...................[ NOT FOUND ]"
 sleep 1.5
 echo -e "$yellow[!][Installing httrack...]"
-xterm -T "INSTALLER HTTRACK" -geometry 100x30 -e "sudo apt-get install httrack"
+xterm -T "INSTALLER HTTRACK" -geometry 100x30 -e "sudo apt-get install httrack -y"
 fi
 
 # Check if mysql exists
@@ -256,7 +256,7 @@ else
 echo -e "$red[x][gnome-terminal]...................[ NOT FOUND ]"
 sleep 1.5
 echo -e "$yellow[!][Installing gnome-terminal...]"
-xterm -T "INSTALLER GNOME-TERMINAL" -geometry 100x30 -e "sudo apt-get install gnome-terminal"
+xterm -T "INSTALLER GNOME-TERMINAL" -geometry 100x30 -e "sudo apt-get install gnome-terminal -y"
 fi
 
 # Check if jq exists
